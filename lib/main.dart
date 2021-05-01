@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_web_embed_twitter/main_navigator_observer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:ui' as ui;
 import 'dart:html' as html;
 
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+
+import 'main_dialog_open_state_notifier_provider.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -38,6 +41,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MainPage(),
+      navigatorObservers: [MainNavigatorObserver(context)],
     );
   }
 }
@@ -45,6 +49,8 @@ class MyApp extends StatelessWidget {
 class MainPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final isDialogOpen = useProvider(mainDialogOpenStateNotifierProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Embed Twitter sample'),
@@ -64,6 +70,14 @@ class MainPage extends HookWidget {
               ],
             ),
             Positioned.fill(
+                child: Visibility(
+                  visible: isDialogOpen,
+                  child: PointerInterceptor(
+                    child: Container(),
+                  ),
+                )
+            ),
+            Positioned.fill(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -73,11 +87,11 @@ class MainPage extends HookWidget {
                   PointerInterceptor(
                     child: ElevatedButton(
                         onPressed: () {
-                          // TODO 押された
+                          _showDialog(context);
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Text('ブックマークする'),
+                          child: Text('Bookmark'),
                         )),
                   )
                 ],
@@ -87,5 +101,23 @@ class MainPage extends HookWidget {
         ),
       ),
     );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        routeSettings: RouteSettings(name: "dialog"),
+        builder: (_) => AlertDialog(
+              title: Text('Information', style: TextStyle(fontSize: 18)),
+              content: Text('It is bookmarked.'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      // ダイアログを閉じる
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('OK'))
+              ],
+            ));
   }
 }
