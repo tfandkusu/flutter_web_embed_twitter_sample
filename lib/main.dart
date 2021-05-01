@@ -10,10 +10,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ui.platformViewRegistry.registerViewFactory('twitter', (viewId) {
+      // <div>
+      // <blockquote class="twitter-tweet">
+      // <a href="https://twitter.com/tfandkusu/status/1325717641839874049"></a>
+      // </blockquote>
+      // <script src="https://platform.twitter.com/widgets.js">
+      // </div>
       final div = html.DivElement();
       final script = html.ScriptElement();
       script.src = "https://platform.twitter.com/widgets.js";
-      // シングルトンなVideo要素を作成するメソッド
       final quote = html.Element.tag('blockquote');
       quote.classes = ["twitter-tweet"];
       final a = html.AnchorElement(
