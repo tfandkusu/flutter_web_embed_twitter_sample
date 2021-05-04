@@ -65,7 +65,7 @@ class MainPage extends HookWidget {
               children: <Widget>[
                 SizedBox(
                     height: 300,
-                    width: 600,
+                    width: 540,
                     child: HtmlElementView(viewType: 'twitter')),
               ],
             ),
