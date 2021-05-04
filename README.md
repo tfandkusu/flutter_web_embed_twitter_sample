@@ -4,7 +4,7 @@ Flutter Webに[Twitterのツイート埋め込み](https://help.twitter.com/ja/u
 
 さらにその上にFlutterの[ElevatedButton](https://api.flutter.dev/flutter/material/ElevatedButton-class.html)を設置しています。
 
-<img src="https://raw.githubusercontent.com/tfandkusu/flutter_web_embed_twitter_sample/main/img/ss1.png" width="200">
+<img src="https://user-images.githubusercontent.com/16898831/117028991-317dc800-ad39-11eb-9078-db9b7186628d.png" width="200">
 
 それだけだと、Flutterのボタンを押したら、後ろのツイート埋め込みが押されたことになり、Twitterが別のタブで開かれます。
 
@@ -12,7 +12,7 @@ Flutter Webに[Twitterのツイート埋め込み](https://help.twitter.com/ja/u
 
 さらに、ボタンを押すとダイアログが表示されます。
 
-<img src="https://raw.githubusercontent.com/tfandkusu/flutter_web_embed_twitter_sample/main/img/ss2.png" width="200">
+<img src="https://user-images.githubusercontent.com/16898831/117028999-33478b80-ad39-11eb-8ab2-1427da0d5047.png" width="200">
 
 ダイアログが表示されたときだけ、画面すべてをPointerInterceptorウィジットで覆うことで、ダイアログに対するクリックを行えるようにしています。
 
