@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import 'main_dialog_open_state_notifier_provider.dart';
 
 class MainNavigatorObserver extends NavigatorObserver {

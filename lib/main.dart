@@ -4,9 +4,7 @@ import 'package:flutter_web_embed_twitter/main_navigator_observer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:ui' as ui;
 import 'dart:html' as html;
-
 import 'package:pointer_interceptor/pointer_interceptor.dart';
-
 import 'main_dialog_open_state_notifier_provider.dart';
 
 void main() {
@@ -71,12 +69,11 @@ class MainPage extends HookWidget {
             ),
             Positioned.fill(
                 child: Visibility(
-                  visible: isDialogOpen,
-                  child: PointerInterceptor(
-                    child: Container(),
-                  ),
-                )
-            ),
+              visible: isDialogOpen,
+              child: PointerInterceptor(
+                child: Container(),
+              ),
+            )),
             Positioned.fill(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -113,7 +110,7 @@ class MainPage extends HookWidget {
               actions: [
                 TextButton(
                     onPressed: () {
-                      // ダイアログを閉じる
+                      // Close dialog
                       Navigator.of(context).pop();
                     },
                     child: Text('OK'))
