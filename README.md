@@ -1,6 +1,6 @@
 # Flutter WebにTwitterのツイート埋め込みを貼るサンプル
 
-Flutter Webに[Twitterのツイート埋め込み](https://help.twitter.com/ja/using-twitter/embed-twitter-feed)を[HtmlElementView](https://api.flutter.dev/flutter/widgets/HtmlElementView/HtmlElementView.html)を使い設置してします。
+Flutter Webに[Twitterのツイート埋め込み](https://help.twitter.com/ja/using-twitter/embed-twitter-feed)を[HtmlElementView](https://api.flutter.dev/flutter/widgets/HtmlElementView-class.html)を使い設置してします。
 
 さらにその上にFlutterの[ElevatedButton](https://api.flutter.dev/flutter/material/ElevatedButton-class.html)を設置しています。
 
@@ -8,11 +8,11 @@ Flutter Webに[Twitterのツイート埋め込み](https://help.twitter.com/ja/u
 
 それだけだと、Flutterのボタンを押したら、後ろのツイート埋め込みが押されたことになり、Twitterが別のタブで開かれます。
 
-よって、[pointer_interceptor](https://pub.dev/packages/pointer_interceptor)パッケージのPointerInterceptorウィジットでボタンを囲み使い、Flutterのボタンを押せるようにします。
+よって、[pointer_interceptor](https://pub.dev/packages/pointer_interceptor)パッケージのPointerInterceptorウィジットでボタンを囲み、Flutterのボタンを押せるようにします。
 
 さらに、ボタンを押すとダイアログが表示されます。
 
 <img src="https://user-images.githubusercontent.com/16898831/117028999-33478b80-ad39-11eb-8ab2-1427da0d5047.png" width="320">
 
-ダイアログが表示されたときだけ、画面すべてをPointerInterceptorウィジットで覆うことで、ダイアログに対するクリックを行えるようにしています。
+ダイアログが表示されたときだけ、HtmlElementViewをPointerInterceptorウィジットで覆うことで、ダイアログに対するクリックを行えるようにしています。
 
