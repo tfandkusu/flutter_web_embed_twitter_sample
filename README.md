@@ -1,5 +1,7 @@
 # Flutter WebにTwitterのツイート埋め込みを貼るサンプル
 
+<img src="https://codebuild.ap-northeast-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiaUZ4aUpndE9jM0lvYk40Z1pqVGlmL1daRUZOQzRtTTlMcU1ES0pmTmpKcmJLZjBqNmFMUHpyZUtsTDYvVUI4M25rNnZLWUo0cGUzcUlXdnpUL1VuR29rPSIsIml2UGFyYW1ldGVyU3BlYyI6ImpIWjlKblBpNmIrT1gvdGwiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main">
+
 Flutter Webに[Twitterのツイート埋め込み](https://help.twitter.com/ja/using-twitter/embed-twitter-feed)を[HtmlElementView](https://api.flutter.dev/flutter/widgets/HtmlElementView-class.html)を使い設置してします。
 
 さらにその上にFlutterの[ElevatedButton](https://api.flutter.dev/flutter/material/ElevatedButton-class.html)を設置しています。
