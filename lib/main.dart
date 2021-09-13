@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_web_embed_twitter/main_navigator_observer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:ui' as ui;
@@ -30,24 +29,32 @@ class MyApp extends StatelessWidget {
           href: "https://twitter.com/tfandkusu/status/1372519390034370563");
       quote.children = [a];
       div.children = [quote, script];
+      div.style.width = '100%';
+      div.style.height = '100%';
       return div;
     });
+    return MyAppWidget();
+  }
+}
 
+class MyAppWidget extends HookConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: MainPage(),
-      navigatorObservers: [MainNavigatorObserver(context)],
+      navigatorObservers: [MainNavigatorObserver(ref)],
     );
   }
 }
 
-class MainPage extends HookWidget {
+class MainPage extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final isDialogOpen = useProvider(mainDialogOpenStateNotifierProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDialogOpen = ref.watch(mainDialogOpenStateNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
