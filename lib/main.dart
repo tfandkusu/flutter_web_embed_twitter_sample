@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_embed_twitter/main_navigator_observer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'dart:ui' as ui;
+import 'shims/dart_ui.dart' as ui;
 import 'dart:html' as html;
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'main_dialog_open_state_notifier_provider.dart';
