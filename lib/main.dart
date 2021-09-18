@@ -13,26 +13,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ui.platformViewRegistry.registerViewFactory('twitter', (viewId) {
-      // <div>
-      // <blockquote class="twitter-tweet">
-      // <a href="https://twitter.com/tfandkusu/status/1325717641839874049"></a>
-      // </blockquote>
-      // <script src="https://platform.twitter.com/widgets.js">
-      // </div>
-      final div = html.DivElement();
-      final script = html.ScriptElement();
-      script.src = "https://platform.twitter.com/widgets.js";
-      final quote = html.Element.tag('blockquote');
-      quote.classes = ["twitter-tweet"];
-      final a = html.AnchorElement(
-          href: "https://twitter.com/tfandkusu/status/1372519390034370563");
-      quote.children = [a];
-      div.children = [quote, script];
-      div.style.width = '100%';
-      div.style.height = '100%';
-      return div;
-    });
     return MyAppWidget();
   }
 }
@@ -63,15 +43,12 @@ class MainPage extends HookConsumerWidget {
       body: Center(
         child: Stack(
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                    height: 300,
-                    width: 540,
-                    child: HtmlElementView(viewType: 'twitter')),
+            ListView(
+              children: [
+                TweetWidget(
+                    "https://twitter.com/tfandkusu/status/1395988534347976704"),
+                TweetWidget(
+                    "https://twitter.com/tfandkusu/status/1406226700170498051")
               ],
             ),
             Positioned.fill(
@@ -123,5 +100,60 @@ class MainPage extends HookConsumerWidget {
                     child: Text('OK'))
               ],
             ));
+  }
+}
+
+class TweetWidget extends StatefulWidget {
+  final String _url;
+
+  TweetWidget(this._url);
+
+  @override
+  State<StatefulWidget> createState() {
+    return TweetWidgetState(_url);
+  }
+}
+
+class TweetWidgetState extends State<TweetWidget> {
+  static int id = 1;
+
+  String _viewTypeId = "";
+
+  TweetWidgetState(String url) {
+    _viewTypeId = "twitter-$id";
+    ++id;
+    ui.platformViewRegistry.registerViewFactory(_viewTypeId, (viewId) {
+      // <div>
+      // <blockquote class="twitter-tweet">
+      // <a href="https://twitter.com/tfandkusu/status/1325717641839874049"></a>
+      // </blockquote>
+      // <script src="https://platform.twitter.com/widgets.js">
+      // </div>
+      final div = html.DivElement();
+      final script = html.ScriptElement();
+      script.src = "https://platform.twitter.com/widgets.js";
+      final quote = html.Element.tag('blockquote');
+      quote.classes = ["twitter-tweet"];
+      final a = html.AnchorElement(href: url);
+      quote.children = [a];
+      div.children = [quote, script];
+      div.style.width = '100%';
+      div.style.height = '100%';
+      return div;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Spacer(),
+        Container(
+            constraints: BoxConstraints(maxWidth: 540, maxHeight: 500),
+            padding: EdgeInsets.only(bottom: 16),
+            child: HtmlElementView(viewType: _viewTypeId)),
+        Spacer()
+      ],
+    );
   }
 }
