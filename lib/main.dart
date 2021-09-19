@@ -145,15 +145,32 @@ class TweetWidgetState extends State<TweetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Spacer(),
-        Container(
-            constraints: BoxConstraints(maxWidth: 540, maxHeight: 500),
-            padding: EdgeInsets.only(bottom: 16),
-            child: HtmlElementView(viewType: _viewTypeId)),
-        Spacer()
-      ],
-    );
+    final deviceData = MediaQuery.of(context);
+    if (deviceData.size.width >= 600) {
+      return Row(
+        children: [
+          Spacer(),
+          SizedBox(
+              width: 568,
+              height: 500,
+              child: HtmlElementView(viewType: _viewTypeId)),
+          Spacer()
+        ],
+      );
+    } else {
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SizedBox(width: 16),
+          Expanded(
+            child: Container(
+              height: 500,
+              child: HtmlElementView(viewType: _viewTypeId),
+            ),
+          ),
+          SizedBox(width: 16)
+        ],
+      );
+    }
   }
 }
