@@ -47,6 +47,7 @@ class MainPage extends HookConsumerWidget {
               children: [
                 TweetWidget(
                     "https://twitter.com/tfandkusu/status/1395988534347976704"),
+                _buildScrollMessage(),
                 TweetWidget(
                     "https://twitter.com/tfandkusu/status/1406226700170498051")
               ],
@@ -101,6 +102,19 @@ class MainPage extends HookConsumerWidget {
               ],
             ));
   }
+
+  Row _buildScrollMessage() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: Text("Can't scroll over tweets.",
+              style: TextStyle(fontSize: 14, color: Colors.black87)),
+        )
+      ],
+    );
+  }
 }
 
 class TweetWidget extends StatefulWidget {
@@ -148,13 +162,12 @@ class TweetWidgetState extends State<TweetWidget> {
     final deviceData = MediaQuery.of(context);
     if (deviceData.size.width >= 600) {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Spacer(),
           SizedBox(
               width: 568,
-              height: 500,
-              child: HtmlElementView(viewType: _viewTypeId)),
-          Spacer()
+              height: 450,
+              child: HtmlElementView(viewType: _viewTypeId))
         ],
       );
     } else {
