@@ -21,7 +21,7 @@ class MyAppWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Embed Twitter sample',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
