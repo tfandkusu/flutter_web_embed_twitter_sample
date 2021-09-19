@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_embed_twitter/main_navigator_observer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'shims/dart_ui.dart' as ui;
 import 'dart:html' as html;
 import 'package:pointer_interceptor/pointer_interceptor.dart';
-import 'main_dialog_open_state_notifier_provider.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -17,16 +16,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyAppWidget extends HookConsumerWidget {
+class MyAppWidget extends StatelessWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Embed Twitter sample',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
-      navigatorObservers: [MainNavigatorObserver(ref)],
+      home: MainPage()
     );
   }
 }
@@ -34,85 +32,20 @@ class MyAppWidget extends HookConsumerWidget {
 class MainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDialogOpen = ref.watch(mainDialogOpenStateNotifierProvider);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Embed Twitter sample'),
       ),
       body: Center(
-        child: Stack(
+        child: ListView(
           children: [
-            ListView(
-              children: [
-                TweetWidget(
-                    "https://twitter.com/tfandkusu/status/1395988534347976704"),
-                _buildScrollMessage(),
-                TweetWidget(
-                    "https://twitter.com/tfandkusu/status/1406226700170498051")
-              ],
-            ),
-            Positioned.fill(
-                child: Visibility(
-              visible: isDialogOpen,
-              child: PointerInterceptor(
-                child: Container(),
-              ),
-            )),
-            Positioned.fill(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 16),
-                  PointerInterceptor(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          _showDialog(context);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text('Bookmark'),
-                        )),
-                  )
-                ],
-              ),
-            ),
+            TweetWidget(
+                "https://twitter.com/tfandkusu/status/1395988534347976704"),
+            TweetWidget(
+                "https://twitter.com/tfandkusu/status/1406226700170498051")
           ],
         ),
       ),
-    );
-  }
-
-  void _showDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        routeSettings: RouteSettings(name: "dialog"),
-        builder: (_) => AlertDialog(
-              title: Text('Information', style: TextStyle(fontSize: 18)),
-              content: Text('It is bookmarked.'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      // Close dialog
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('OK'))
-              ],
-            ));
-  }
-
-  Row _buildScrollMessage() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: EdgeInsets.all(16),
-          child: Text("Can't scroll over tweets.",
-              style: TextStyle(fontSize: 14, color: Colors.black87)),
-        )
-      ],
     );
   }
 }
@@ -131,9 +64,11 @@ class TweetWidget extends StatefulWidget {
 class TweetWidgetState extends State<TweetWidget> {
   static int id = 1;
 
+  final String _url;
+
   String _viewTypeId = "";
 
-  TweetWidgetState(String url) {
+  TweetWidgetState(this._url) {
     _viewTypeId = "twitter-$id";
     ++id;
     ui.platformViewRegistry.registerViewFactory(_viewTypeId, (viewId) {
@@ -148,7 +83,7 @@ class TweetWidgetState extends State<TweetWidget> {
       script.src = "https://platform.twitter.com/widgets.js";
       final quote = html.Element.tag('blockquote');
       quote.classes = ["twitter-tweet"];
-      final a = html.AnchorElement(href: url);
+      final a = html.AnchorElement(href: _url);
       quote.children = [a];
       div.children = [quote, script];
       div.style.width = '100%';
@@ -164,10 +99,31 @@ class TweetWidgetState extends State<TweetWidget> {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-              width: 568,
-              height: 450,
-              child: HtmlElementView(viewType: _viewTypeId))
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Stack(children: [
+              SizedBox(
+                  width: 568,
+                  height: 450,
+                  child: HtmlElementView(viewType: _viewTypeId)),
+              PointerInterceptor(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    child: SizedBox(
+                      width: 568,
+                      height: 450,
+                    ),
+                    onTap: () async {
+                      if (await canLaunch(_url)) {
+                        await launch(_url);
+                      }
+                    },
+                  ),
+                ),
+              )
+            ]),
+          ),
         ],
       );
     } else {
