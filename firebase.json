@@ -1,0 +1,6 @@
+{
+  "hosting": {
+    "site": "flutter-web-embed-twitter",
+    "public": "build/web/"
+  }
+}
