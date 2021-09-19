@@ -23,3 +23,7 @@ Flutter Webに[Twitterのツイート埋め込み](https://help.twitter.com/ja/u
 <img src="https://user-images.githubusercontent.com/16898831/117028999-33478b80-ad39-11eb-8ab2-1427da0d5047.png" width="320">
 
 ダイアログが表示されたときだけ、HtmlElementViewをPointerInterceptorウィジットで覆うことで、ダイアログに対するクリックを行えるようにしています。
+
+## 注意点
+
+ツイートの上ではスクロールできません。スクロールする画面とクリックできるHTML要素は組み合わせない方が良いことが分かりました。
