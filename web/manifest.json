@@ -1,11 +1,11 @@
 {
-    "name": "flutter_web_embed_twitter",
-    "short_name": "flutter_web_embed_twitter",
+    "name": "Embed Twitter sample",
+    "short_name": "Embed Twitter sample",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Flutter WebにTwitterのツイート埋め込みを貼るサンプル",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
