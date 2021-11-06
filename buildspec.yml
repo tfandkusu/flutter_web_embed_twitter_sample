@@ -11,5 +11,8 @@ phases:
       - asdf reshim
   build:
     commands:
+      # フォーマットチェック
+      - flutter format -n --set-exit-if-changed .
+      # ビルドできるかの確認
       - flutter pub get
       - flutter build web
