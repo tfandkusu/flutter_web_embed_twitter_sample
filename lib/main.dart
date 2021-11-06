@@ -21,7 +21,7 @@ class MyAppWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'Embed Twitter sample Pull Request Test',
+      title: 'Embed Twitter sample Pull Request Test 2',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
