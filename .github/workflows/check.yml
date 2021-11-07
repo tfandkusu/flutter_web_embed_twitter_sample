@@ -1,0 +1,24 @@
+# ワークフローの名前
+name: check
+# ワークフロー実行タイミングは
+on:
+  # mainブランチへのPUSH
+  push:
+    branches:
+      - main
+  # プルリクの作成と更新
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+jobs:
+  check: # job名
+    # ubuntuで動かす
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: asdf-vm/actions/install@v1
+      - run: flutter format -n --set-exit-if-changed .
+      - run: flutter pub get
+      - run: flutter build web
