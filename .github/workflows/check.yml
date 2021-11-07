@@ -17,8 +17,8 @@ jobs:
     # ubuntuで動かす
     runs-on: ubuntu-latest
     steps:
-      # 該当ブランチをチェックアウトする
       - uses: actions/checkout@v2
       - uses: asdf-vm/actions/install@v1
-      # Makefile実行
-      - run: make check
+      - run: flutter format -n --set-exit-if-changed .
+      - run: flutter pub get
+      - run: flutter build web
