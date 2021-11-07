@@ -25,4 +25,4 @@ jobs:
       - uses: asdf-vm/actions/install@v1
       - run: flutter pub get
       - run: flutter build web
-      - run: firebase deploy
+      - run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
