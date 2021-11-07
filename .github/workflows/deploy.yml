@@ -1,0 +1,22 @@
+# ワークフローの名前
+name: deploy
+# ワークフロー実行タイミングは
+on:
+  # releaseブランチへのPUSH
+  push:
+    branches:
+      - release
+jobs:
+  deploy: # job名
+    # ubuntuで動かす
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install -g firebase-tools
+      - uses: actions/checkout@v2
+      - uses: asdf-vm/actions/install@v1
+      - run: flutter pub get
+      - run: flutter build web
+      - run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
