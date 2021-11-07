@@ -6,12 +6,6 @@ on:
   push:
     branches:
       - release
-  # 動作確認のため
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
 jobs:
   deploy: # job名
     # ubuntuで動かす
