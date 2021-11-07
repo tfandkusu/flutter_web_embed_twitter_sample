@@ -19,5 +19,6 @@ jobs:
     steps:
       # 該当ブランチをチェックアウトする
       - uses: actions/checkout@v2
+      - uses: asdf-vm/actions/install@v1
       # Makefile実行
       - run: make check
